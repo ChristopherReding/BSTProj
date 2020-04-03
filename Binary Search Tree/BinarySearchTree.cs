@@ -13,7 +13,7 @@ namespace Binary_Search_Tree
 
         public bool CheckForRightLink(Node node)
         {
-            if(node.rightLink == null)
+            if (node.rightLink == null)
             {
                 return false;
             }
@@ -38,14 +38,14 @@ namespace Binary_Search_Tree
         {
             Node node = new Node();
             node.data = number;
-            if(start == null) //to add the level 0 the first node
+            if (start == null) //to add the level 0 the first node
             {
                 start = node;
                 return;
             }
-                        
+
             Node tempNode = start;
-            bool nodeHasLink = true;            
+            bool nodeHasLink = true;
             if (number <= tempNode.data)
             {
                 nodeHasLink = CheckForLeftLink(tempNode);
@@ -54,18 +54,18 @@ namespace Binary_Search_Tree
             {
                 nodeHasLink = CheckForRightLink(tempNode);
             }
-            
-            while(nodeHasLink)
-            {                
+
+            while (nodeHasLink)
+            {
                 if (number <= tempNode.data)
-                {                    
-                    tempNode = tempNode.leftLink;                    
+                {
+                    tempNode = tempNode.leftLink;
                 }
                 else if (number > tempNode.data)
-                {                    
-                    tempNode = tempNode.rightLink;                    
+                {
+                    tempNode = tempNode.rightLink;
                 }
-                
+
                 if (number <= tempNode.data)
                 {
                     nodeHasLink = CheckForLeftLink(tempNode);
@@ -84,10 +84,67 @@ namespace Binary_Search_Tree
             {
                 tempNode.rightLink = node;
             }
+        }
+        public bool Search(int number)
+        {
+            Node node = new Node();
+            node.data = number;
+            if (start == null) //to add the level 0 the first node
+            {
+                return false;
+            }
+            else if (start.data == number)
+            {
+                return true;
+            }
+            Node tempNode = start;
+            bool nodeHasLink = true;
+            if (number <= tempNode.data)
+            {
+                nodeHasLink = CheckForLeftLink(tempNode);
+            }
+            else if (number > tempNode.data)
+            {
+                nodeHasLink = CheckForRightLink(tempNode);
+            }
 
+            while (nodeHasLink)
+            {
+                if(number == tempNode.rightLink.data || number == tempNode.leftLink.data)
+                {
+                    return true;
+                }
 
-
-
+                if (number <= tempNode.data)
+                {
+                    tempNode = tempNode.leftLink;
+                }
+                else if (number > tempNode.data)
+                {
+                    tempNode = tempNode.rightLink;
+                }
+                if (number <= tempNode.data)
+                {
+                    nodeHasLink = CheckForLeftLink(tempNode);
+                }
+                else if (number > tempNode.data)
+                {
+                    nodeHasLink = CheckForRightLink(tempNode);
+                }
+            }
+            return false;
+        }
+        public void DisplaySearchResults(int searchable)
+        {
+            bool inBST = Search(searchable);
+            if (inBST)
+            {
+                Console.WriteLine($"{searchable} is in the BST!");
+            }
+            else
+            {
+                Console.WriteLine($"{searchable} is no where to be found...");
+            }
         }
     }
 }
